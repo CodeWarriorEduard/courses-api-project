@@ -3,7 +3,7 @@ export class ApiResponse<T>{
     constructor(
     status: number,
     message: string,
-    data: T[] = [],
+    data: T,
     timestamp: string,
     ) {
     this.status = status;
@@ -15,7 +15,7 @@ export class ApiResponse<T>{
 
     status: number;
     message: string;
-    data: T[];
+    data: T;
     timestamp: string;
 
 
