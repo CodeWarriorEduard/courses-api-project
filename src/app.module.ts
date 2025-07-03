@@ -17,7 +17,7 @@ import { Content } from './contents/entities/content.entity';
   imports: [UsersModule, CoursesModule, ContentsModule, QuestionsModule, ReviewsModule, TypeOrmModule.forRoot({
     host: 'localhost',
     type: 'postgres',
-    port: 5432,
+    port: 5433,
     username: 'postgres',
     password: 'password',
     database: 'course_api',

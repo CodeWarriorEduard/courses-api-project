@@ -4,6 +4,7 @@ import { Review } from "src/reviews/entities/review.entity";
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 @Entity()
 export class User{
+    
     @PrimaryGeneratedColumn()
     id:number
     @Column()
