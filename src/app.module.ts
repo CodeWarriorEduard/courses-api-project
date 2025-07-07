@@ -12,18 +12,31 @@ import { Review } from './reviews/entities/review.entity';
 import { Question } from './questions/entities/question.entity';
 import { Course } from './courses/entities/course.entity';
 import { Content } from './contents/entities/content.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
-  imports: [UsersModule, CoursesModule, ContentsModule, QuestionsModule, ReviewsModule, TypeOrmModule.forRoot({
-    host: 'localhost',
-    type: 'postgres',
-    port: 5433,
-    username: 'postgres',
-    password: 'password',
-    database: 'course_api',
-    entities: [User, Review, Question, Course, Content],
-    synchronize: true
-  })],
+  imports: [
+    ConfigModule.forRoot({ envFilePath: `.env.${process.env.NODE_ENV}` }),
+    UsersModule,
+    CoursesModule,
+    ContentsModule,
+    QuestionsModule,
+    ReviewsModule,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        host: configService.get('HOST'),
+        type: 'postgres',
+        port: configService.get('DBPORT'),
+        username: configService.get('USERNAME'),
+        password: configService.get('PASSWORD'),
+        database: configService.get('DATABASE'),
+        entities: [User, Review, Question, Course, Content],
+        synchronize: false,
+      }),
+      inject:[ConfigService]
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
